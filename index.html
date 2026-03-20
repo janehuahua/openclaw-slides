@@ -256,6 +256,20 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
   100% { background-position: 200% center; }
 }
 
+/* Watermark on every slide */
+.watermark {
+  position: absolute;
+  bottom: clamp(1.2rem, 2.5vw, 2rem);
+  left: clamp(2rem, 5vw, 4rem);
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  color: rgba(240, 240, 245, 0.12);
+  letter-spacing: 0.15em;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
 .lobster-glyph { font-size: clamp(3rem,6vw,5rem); position: absolute; right: clamp(3rem,8vw,8rem); top: 50%; opacity: 0.08; z-index: 0 !important; animation: float-lobster 8s ease-in-out infinite; }
 @keyframes float-lobster {
   0%, 100% { transform: translateY(-50%); opacity: 0.06; }
@@ -273,19 +287,24 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 1 — 标题页 ══════════ -->
 <section class="slide" id="s1">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">01 / 10</span>
   <div class="lobster-glyph">🦞</div>
   <div class="slide-label reveal">营销学分析 · Marketing Analysis</div>
   <div class="zh-title reveal">OpenClaw是怎么<span class="accent">火</span>的？</div>
   <div class="en-title reveal" data-group="zh-en">How OpenClaw Went Viral</div>
   <p class="subtitle reveal">技术不难，为什么是它火了？<br>一个营销学教授的视角</p>
-  <div style="margin-top: 2rem;" class="reveal">
+  <div style="margin-top: 2.5rem;" class="reveal">
+    <span style="font-family: var(--font-body); font-size: clamp(1.2rem, 2vw, 1.6rem); color: var(--text-primary); font-weight: 700; letter-spacing: 0.05em;">CIU KEPHA 陈洁教授</span>
+  </div>
+  <div style="margin-top: 1rem;" class="reveal">
     <span style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-dim); letter-spacing: 0.1em;">2026.03 — 从OpenClaw实战到安全、判断力与学习智慧</span>
   </div>
 </section>
 
 <!-- ══════════ SLIDE 2 — 核心问题 ══════════ -->
 <section class="slide" id="s2">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">02 / 10</span>
   <div class="big-num">?</div>
   <div class="slide-label reveal">核心问题 · The Core Question</div>
@@ -303,6 +322,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 3 — 第1-2阶段 ══════════ -->
 <section class="slide" id="s3">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">03 / 10</span>
   <div class="big-num">1-2</div>
   <div class="slide-label reveal">第1-2阶段 · 2025年11月 — 2026年1月</div>
@@ -334,6 +354,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 4 — Moltbook奇观 ══════════ -->
 <section class="slide" id="s4">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">04 / 10</span>
   <div class="big-num">3</div>
   <div class="slide-label reveal">第3阶段 · 2026年1月29日 — 2月初</div>
@@ -368,6 +389,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 5 — 巨头背书 ══════════ -->
 <section class="slide" id="s5">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">05 / 10</span>
   <div class="big-num">4-5</div>
   <div class="slide-label reveal">第4-5阶段 · 2026年2月 — 3月</div>
@@ -407,6 +429,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 6 — 扩散链条 ══════════ -->
 <section class="slide" id="s6">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">06 / 10</span>
   <div class="slide-label reveal">创新扩散路径 · Diffusion Pattern</div>
   <div class="zh-heading reveal">名人背书的<span class="accent">递进链条</span></div>
@@ -430,6 +453,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 7 — 五个营销学命题 ══════════ -->
 <section class="slide" id="s7">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">07 / 10</span>
   <div class="slide-label reveal">五个营销学命题 · Five Marketing Takeaways</div>
   <div class="zh-heading reveal" style="margin-bottom: 0.2rem;">OpenClaw<span class="accent">赢</span>在哪里？</div>
@@ -470,6 +494,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 8 — 结尾 ══════════ -->
 <section class="slide" id="s8">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">08 / 10</span>
   <div class="lobster-glyph">🦞</div>
   <div class="slide-label reveal">结语 · Final Thought</div>
@@ -487,6 +512,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 9 — 市场视角：安全的商业逻辑 ══════════ -->
 <section class="slide slide-enhanced" id="s9">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">09 / 10</span>
   <div class="big-num">$</div>
   <div class="slide-label reveal">市场视角 · The Market Lens</div>
@@ -514,6 +540,7 @@ body { background: var(--bg-primary); color: var(--text-primary); font-family: v
 
 <!-- ══════════ SLIDE 10 — 信任即壁垒 ══════════ -->
 <section class="slide slide-enhanced" id="s10">
+  <div class="watermark">CIU KEPHA 陈洁教授</div>
   <span class="slide-num">10 / 10</span>
   <div class="lobster-glyph">🦞</div>
   <div class="slide-label reveal">信任经济 · The Trust Economy</div>
