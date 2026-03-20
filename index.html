@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw出圈解读 — 营销学教授的视角</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --accent: #ff4d3a;
+  --accent-glow: rgba(255, 77, 58, 0.15);
+  --accent-secondary: #ff8c42;
+  --text-primary: #f0f0f5;
+  --text-secondary: rgba(240, 240, 245, 0.55);
+  --text-dim: rgba(240, 240, 245, 0.3);
+  --border: rgba(255, 255, 255, 0.06);
+  --font-display: 'Space Mono', monospace;
+  --font-body: 'Noto Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-snap-type: y mandatory; overflow-y: scroll; overflow-x: hidden; }
+body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+.slide {
+  width: 100vw; height: 100vh; scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: clamp(2rem, 5vw, 5rem) clamp(3rem, 8vw, 10rem);
+}
+.slide::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 80% 60% at 20% 80%, var(--accent-glow), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 20%, rgba(100,100,255,0.03), transparent);
+}
+.slide::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.3;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.slide > * { position: relative; z-index: 1; }
+.slide-num {
+  position: absolute; top: clamp(1.5rem,3vw,2.5rem); right: clamp(2rem,5vw,4rem);
+  font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-dim); letter-spacing: 0.15em; z-index: 2;
+}
+.zh-title {
+  font-family: var(--font-body); font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+  font-weight: 900; line-height: 1.2; margin-bottom: 0.4rem;
+}
+.en-title {
+  font-family: var(--font-display); font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 400; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 1.5rem;
+}
+.zh-heading {
+  font-family: var(--font-body); font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  font-weight: 700; line-height: 1.25; margin-bottom: 0.3rem;
+}
+.en-heading {
+  font-family: var(--font-display); font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+  font-weight: 400; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 1.2rem;
+}
+.slide-label {
+  font-family: var(--font-mono); font-size: clamp(0.8rem,1.2vw,1rem);
+  text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 1rem;
+  color: transparent;
+  background: linear-gradient(90deg, #ff4d3a 0%, #ff8c42 25%, #a855f7 50%, #ff8c42 75%, #ff4d3a 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer-label 4s linear infinite;
+}
+.subtitle { font-size: clamp(1.15rem,2.2vw,1.5rem); color: var(--text-secondary); font-weight: 300; line-height: 1.7; max-width: 52ch; }
+.body-text { font-size: clamp(1.05rem,1.6vw,1.2rem); color: var(--text-secondary); line-height: 1.8; font-weight: 300; }
+.accent { color: var(--accent); display: inline; text-shadow: 0 0 8px rgba(255, 77, 58, 0.3); }
+.accent-secondary { color: var(--accent-secondary); display: inline; }
+
+/* All accent text glows when its parent becomes visible */
+.reveal.visible .accent,
+.glow-reveal.visible .accent,
+.scale-reveal.visible .accent,
+.blur-reveal.visible .accent {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+.highlight-box p { font-size: clamp(1rem,1.5vw,1.15rem); color: var(--text-secondary); line-height: 1.7; font-weight: 300; }
+.highlight-box .label { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.5rem; }
+.timeline { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.2rem; }
+.tl-item { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; }
+.tl-date { font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent); white-space: nowrap; padding-top: 0.15rem; min-width: 5rem; }
+.tl-content { font-size: clamp(1rem,1.4vw,1.15rem); color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
+.quote { font-size: clamp(1.15rem,2vw,1.45rem); font-style: italic; font-weight: 300; line-height: 1.6; color: var(--text-primary); max-width: 36ch; margin: 0.8rem 0; }
+.quote-author { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim); letter-spacing: 0.1em; margin-top: 0.4rem; }
+.takeaway-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,260px),1fr)); gap: 1rem; margin-top: 1.2rem; }
+.takeaway-card .num { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.4rem; }
+.takeaway-card h3 { font-family: var(--font-body); font-size: clamp(1.05rem,1.4vw,1.18rem); font-weight: 700; margin-bottom: 0.2rem; line-height: 1.3; }
+.takeaway-card .en-sub { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.4rem; letter-spacing: 0.03em; }
+.takeaway-card p { font-size: clamp(0.92rem,1.2vw,1.02rem); color: var(--text-secondary); line-height: 1.55; font-weight: 300; }
+.big-num {
+  font-family: var(--font-display); font-size: clamp(4rem,10vw,9rem); font-weight: 700;
+  color: var(--accent); line-height: 1; opacity: 0.08;
+  position: absolute; right: clamp(2rem,8vw,8rem); bottom: clamp(2rem,5vw,5rem); z-index: 0 !important;
+  animation: float-num 6s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(255, 77, 58, 0.3);
+}
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem,4vw,4rem); align-items: start; }
+@media (max-width: 800px) { .two-col { grid-template-columns: 1fr; gap: 1.5rem; } }
+.chain-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 1.2rem 0; }
+.chain-card .cn { font-size: 1.1rem; font-weight: 700; }
+.chain-card .role { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.15rem; }
+.chain-arrow { color: var(--accent); font-family: var(--font-mono); font-size: 1rem; }
+.dot-nav { position: fixed; right: clamp(1rem,2vw,2rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+.dot-nav a { width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim); transition: all 0.3s; display: block; }
+.dot-nav a.active { background: var(--accent); box-shadow: 0 0 8px rgba(255, 77, 58, 0.5), 0 0 16px rgba(255, 77, 58, 0.3); transform: scale(1.4); }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Slide-in from left — for timeline items and key points */
+.glow-reveal {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.glow-reveal.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale-up pop — for highlight boxes and cards */
+.scale-reveal {
+  opacity: 0;
+  transform: scale(0.82) translateY(15px);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.scale-reveal.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Blur-in — for quotes */
+.blur-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  filter: blur(8px);
+  transition: opacity 0.7s ease, transform 0.6s ease, filter 0.7s ease;
+}
+.blur-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    text-shadow: 0 0 6px rgba(255, 77, 58, 0.4), 0 0 15px rgba(255, 77, 58, 0.2);
+    color: #ff4d3a;
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 77, 58, 1), 0 0 40px rgba(255, 77, 58, 0.65), 0 0 80px rgba(255, 77, 58, 0.35), 0 0 120px rgba(255, 77, 58, 0.15);
+    color: #ff7a6a;
+  }
+}
+
+/* Highlight box animated left border */
+.highlight-box {
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent);
+  padding: 1.2rem 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 0 8px 8px 0;
+  max-width: 56ch;
+  animation: highlight-pulse 3s ease-in-out infinite;
+}
+@keyframes highlight-pulse {
+  0%, 100% { border-left-color: #ff4d3a; box-shadow: -4px 0 15px rgba(255, 77, 58, 0.2), -2px 0 30px rgba(255, 77, 58, 0.1); }
+  33% { border-left-color: #ff8c42; box-shadow: -4px 0 20px rgba(255, 140, 66, 0.35), -2px 0 40px rgba(255, 140, 66, 0.15); }
+  66% { border-left-color: #a855f7; box-shadow: -4px 0 20px rgba(168, 85, 247, 0.3), -2px 0 40px rgba(168, 85, 247, 0.15); }
+}
+
+/* Takeaway cards hover glow */
+.takeaway-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem 1.3rem;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.takeaway-card:hover {
+  border-color: rgba(255,77,58,0.4);
+  box-shadow: 0 0 20px rgba(255, 77, 58, 0.1), 0 0 40px rgba(255, 77, 58, 0.05);
+  transform: translateY(-3px);
+}
+
+/* Chain card hover effect */
+.chain-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  text-align: center;
+  min-width: 5.5rem;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.chain-card:hover {
+  border-color: rgba(255,77,58,0.4);
+  box-shadow: 0 0 15px rgba(255, 77, 58, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ─── Slides 9-10: bigger text ─── */
+.slide-enhanced .tl-content { font-size: clamp(1.25rem, 2vw, 1.55rem) !important; line-height: 1.7 !important; }
+.slide-enhanced .tl-date { font-size: 1.6rem !important; }
+.slide-enhanced .zh-heading { font-size: clamp(2rem, 4.5vw, 3.4rem) !important; }
+.slide-enhanced .en-heading { font-size: clamp(1.1rem, 1.8vw, 1.35rem) !important; }
+.slide-enhanced .slide-label { font-size: clamp(0.9rem, 1.4vw, 1.1rem) !important; }
+
+/* Glow box for slide 10 closing — rotating gradient border */
+.glow-box {
+  position: relative;
+  background: var(--bg-primary);
+  border: none;
+  border-radius: 10px;
+  padding: 1.5rem 1.8rem;
+  margin-top: 1.8rem;
+  max-width: 56ch;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 0 30px rgba(255, 77, 58, 0.15), 0 0 60px rgba(168, 85, 247, 0.1);
+}
+.glow-box::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 300%; height: 300%;
+  background: conic-gradient(#ff4d3a, #ff8c42, #a855f7, #6366f1, #ff4d3a);
+  animation: rotate-border 4s linear infinite;
+  z-index: -2;
+}
+.glow-box::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 8px;
+  background: var(--bg-primary);
+  z-index: -1;
+}
+@keyframes rotate-border {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes float-num {
+  0%, 100% { transform: translateY(0); opacity: 0.08; }
+  50% { transform: translateY(-10px); opacity: 0.12; }
+}
+@keyframes shimmer-label {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.lobster-glyph { font-size: clamp(3rem,6vw,5rem); position: absolute; right: clamp(3rem,8vw,8rem); top: 50%; opacity: 0.08; z-index: 0 !important; animation: float-lobster 8s ease-in-out infinite; }
+@keyframes float-lobster {
+  0%, 100% { transform: translateY(-50%); opacity: 0.06; }
+  50% { transform: translateY(calc(-50% - 8px)); opacity: 0.1; }
+}
+</style>
+</head>
+<body>
+<canvas id="particles" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
+<nav class="dot-nav" aria-label="Slide navigation">
+  <a href="#s1" class="active"></a><a href="#s2"></a><a href="#s3"></a><a href="#s4"></a>
+  <a href="#s5"></a><a href="#s6"></a><a href="#s7"></a><a href="#s8"></a>
+  <a href="#s9"></a><a href="#s10"></a>
+</nav>
+
+<!-- ══════════ SLIDE 1 — 标题页 ══════════ -->
+<section class="slide" id="s1">
+  <span class="slide-num">01 / 10</span>
+  <div class="lobster-glyph">🦞</div>
+  <div class="slide-label reveal">营销学分析 · Marketing Analysis</div>
+  <div class="zh-title reveal">OpenClaw是怎么<span class="accent">火</span>的？</div>
+  <div class="en-title reveal" data-group="zh-en">How OpenClaw Went Viral</div>
+  <p class="subtitle reveal">技术不难，为什么是它火了？<br>一个营销学教授的视角</p>
+  <div style="margin-top: 2rem;" class="reveal">
+    <span style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-dim); letter-spacing: 0.1em;">2026.03 — 从OpenClaw实战到安全、判断力与学习智慧</span>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 2 — 核心问题 ══════════ -->
+<section class="slide" id="s2">
+  <span class="slide-num">02 / 10</span>
+  <div class="big-num">?</div>
+  <div class="slide-label reveal">核心问题 · The Core Question</div>
+  <div class="zh-heading reveal">技术不是壁垒，那壁垒是什么？</div>
+  <div class="en-heading reveal" data-group="zh-en">The Technology Is Not Hard. So Why OpenClaw?</div>
+  <p class="body-text reveal" style="max-width: 50ch; margin-bottom: 1.5rem;">
+    有分析认为，OpenClaw底层技术与Claude Code并无本质区别<br>
+    每家大公司都能做，但没有一家做了
+  </p>
+  <div class="highlight-box scale-reveal">
+    <div class="label">关键事实 · Key Facts</div>
+    <p>一小时搭建的周末项目，<span class="accent">60天</span>内GitHub星标从0到<span class="accent">25万</span></p>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 3 — 第1-2阶段 ══════════ -->
+<section class="slide" id="s3">
+  <span class="slide-num">03 / 10</span>
+  <div class="big-num">1-2</div>
+  <div class="slide-label reveal">第1-2阶段 · 2025年11月 — 2026年1月</div>
+  <div class="zh-heading reveal">从周末玩具到开发者社区<span class="accent">爆发</span></div>
+  <div class="en-heading reveal" data-group="zh-en">Weekend Toy → Developer Wildfire</div>
+  <div class="timeline">
+    <div class="tl-item glow-reveal">
+      <span class="tl-date">2025.11</span>
+      <span class="tl-content">第一个commit，项目叫"Warelay"，把AI回复转发到WhatsApp</span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date">2026.01.25</span>
+      <span class="tl-content">正式发布，<span class="accent">一天9,000颗星标</span></span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date">01.27</span>
+      <span class="tl-content">Anthropic要求改名，旧账号被骗子秒抢，$CLAWD代币冲到$16M后归零</span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date">01.30</span>
+      <span class="tl-content">定名OpenClaw，单周<span class="accent">200万访客</span>，星标破<span class="accent">10万</span></span>
+    </div>
+  </div>
+  <div class="highlight-box scale-reveal">
+    <div class="label">营销洞察 · Marketing Insight</div>
+    <p>争议和戏剧性事件本身就是传播燃料</p>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 4 — Moltbook奇观 ══════════ -->
+<section class="slide" id="s4">
+  <span class="slide-num">04 / 10</span>
+  <div class="big-num">3</div>
+  <div class="slide-label reveal">第3阶段 · 2026年1月29日 — 2月初</div>
+  <div class="zh-heading reveal">Moltbook：引爆全球的<span class="accent">奇观事件</span></div>
+  <div class="en-heading reveal" data-group="zh-en">The Spectacle That Broke the Internet</div>
+  <div class="two-col">
+    <div>
+      <p class="body-text reveal" style="margin-bottom: 1rem;">
+        Moltbook上线，几天内涌入<span class="accent">15万注册Agent</span>
+      </p>
+      <p class="body-text reveal" style="margin-bottom: 1rem;">
+        CNN、TechCrunch、Fortune、CNBC集中报道
+      </p>
+      <p class="body-text reveal">
+        1月31日曝出严重安全漏洞，丑闻反而放大关注度
+      </p>
+    </div>
+    <div>
+      <div class="blur-reveal" style="margin-bottom: 1.2rem;">
+        <p class="quote">"我近期见过的最不可思议的、最接近科幻起飞的场景。"</p>
+        <p style="font-size: 0.95rem; color: var(--text-dim); font-style: italic; margin-top: 0.2rem;">"Genuinely the most incredible sci-fi takeoff-adjacent thing I have seen recently."</p>
+        <p class="quote-author">— Andrej Karpathy · OpenAI联合创始人</p>
+      </div>
+      <div class="blur-reveal">
+        <p class="quote">"这仅仅是奇点的非常早期阶段。"</p>
+        <p style="font-size: 0.95rem; color: var(--text-dim); font-style: italic; margin-top: 0.2rem;">"Just the very early stages of the singularity."</p>
+        <p class="quote-author">— Elon Musk</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 5 — 巨头背书 ══════════ -->
+<section class="slide" id="s5">
+  <span class="slide-num">05 / 10</span>
+  <div class="big-num">4-5</div>
+  <div class="slide-label reveal">第4-5阶段 · 2026年2月 — 3月</div>
+  <div class="zh-heading reveal">巨头<span class="accent">集体背书</span></div>
+  <div class="en-heading reveal" data-group="zh-en">When the Titans Endorsed</div>
+  <div class="two-col">
+    <div>
+      <div class="timeline">
+        <div class="tl-item glow-reveal">
+          <span class="tl-date">02.15</span>
+          <span class="tl-content"><strong>Sam Altman</strong> 亲自招募创始人加入OpenAI</span>
+        </div>
+        <div class="tl-item glow-reveal">
+          <span class="tl-date">03.05</span>
+          <span class="tl-content"><strong>Jensen Huang</strong>：<span class="accent">"可能有史以来最重要的软件发布"</span></span>
+        </div>
+        <div class="tl-item glow-reveal">
+          <span class="tl-date">GTC '26</span>
+          <span class="tl-content">Nvidia推出NemoClaw安全框架</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="highlight-box scale-reveal">
+        <div class="label">算力经济学 · Huang's Math</div>
+        <p>标准提示 → <span class="accent">1×</span><br>
+        Agent任务 → <span class="accent">1,000×</span><br>
+        持续运行Agent → <span class="accent">1,000,000×</span></p>
+      </div>
+      <div class="highlight-box reveal" style="margin-top: 0.8rem;">
+        <div class="label">与Linux的对比</div>
+        <p>Linux <span class="accent">30年</span> vs OpenClaw <span class="accent">3周</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 6 — 扩散链条 ══════════ -->
+<section class="slide" id="s6">
+  <span class="slide-num">06 / 10</span>
+  <div class="slide-label reveal">创新扩散路径 · Diffusion Pattern</div>
+  <div class="zh-heading reveal">名人背书的<span class="accent">递进链条</span></div>
+  <div class="en-heading reveal" data-group="zh-en">Rogers' Diffusion of Innovations — In Action</div>
+  <div class="chain-row glow-reveal">
+    <div class="chain-card"><div class="cn">Karpathy</div><div class="role">技术领袖</div></div>
+    <span class="chain-arrow">→</span>
+    <div class="chain-card"><div class="cn">Musk</div><div class="role">科技名人</div></div>
+    <span class="chain-arrow">→</span>
+    <div class="chain-card" style="border-color: rgba(255,77,58,0.3);"><div class="cn">Sam Altman</div><div class="role">亲自挖人</div></div>
+    <span class="chain-arrow">→</span>
+    <div class="chain-card" style="border-color: rgba(255,77,58,0.3);"><div class="cn">Jensen Huang</div><div class="role">"史上最重要的软件"</div></div>
+    <span class="chain-arrow">→</span>
+    <div class="chain-card" style="border-color: rgba(255,140,66,0.3);"><div class="cn">中国互联网巨头</div><div class="role">大众市场</div></div>
+  </div>
+  <div class="highlight-box scale-reveal">
+    <div class="label">营销洞察 · Marketing Insight</div>
+    <p>零广告预算，全靠产品本身引发的连锁反应</p>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 7 — 五个营销学命题 ══════════ -->
+<section class="slide" id="s7">
+  <span class="slide-num">07 / 10</span>
+  <div class="slide-label reveal">五个营销学命题 · Five Marketing Takeaways</div>
+  <div class="zh-heading reveal" style="margin-bottom: 0.2rem;">OpenClaw<span class="accent">赢</span>在哪里？</div>
+  <div class="en-heading reveal" data-group="zh-en">Why OpenClaw Won — It's Not the Tech</div>
+  <div class="takeaway-grid">
+    <div class="takeaway-card scale-reveal">
+      <div class="num">01</div>
+      <h3>用户界面 = 市场可达性</h3>
+      <div class="en-sub">UI Choice = Market Accessibility</div>
+      <p>从命令行搬进聊天App，学习成本降到接近零。界面变了，覆盖人群完全不同。</p>
+    </div>
+    <div class="takeaway-card scale-reveal">
+      <div class="num">02</div>
+      <h3>品牌叙事 > 功能清单</h3>
+      <div class="en-sub">Narrative > Feature List</div>
+      <p>"The AI That Actually Does Things" — 一句话完成对立性定位。</p>
+    </div>
+    <div class="takeaway-card scale-reveal">
+      <div class="num">03</div>
+      <h3>奇观驱动破圈</h3>
+      <div class="en-sub">Spectacle-Driven Virality</div>
+      <p>Moltbook让AI Agent自主社交，创造了视觉化的"WOW时刻"。</p>
+    </div>
+    <div class="takeaway-card scale-reveal">
+      <div class="num">04</div>
+      <h3>争议 = 免费流量</h3>
+      <div class="en-sub">Controversy = Free Traffic</div>
+      <p>每个负面事件都把OpenClaw推向更广泛的公众视野。</p>
+    </div>
+    <div class="takeaway-card scale-reveal">
+      <div class="num">05</div>
+      <h3>名人背书递进链</h3>
+      <div class="en-sub">Cascading Celebrity Endorsement</div>
+      <p>技术领袖 → 科技名人 → 行业巨头 → 大众市场。Rogers创新扩散理论的教科书级演绎。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 8 — 结尾 ══════════ -->
+<section class="slide" id="s8">
+  <span class="slide-num">08 / 10</span>
+  <div class="lobster-glyph">🦞</div>
+  <div class="slide-label reveal">结语 · Final Thought</div>
+  <div class="zh-title reveal">安全不是<span class="accent">成本</span>，<br>是<span class="accent-secondary">投资</span>。</div>
+  <div class="en-title reveal" data-group="zh-en">Security Is Not a Cost. It's an Investment.</div>
+  <p class="subtitle reveal" style="margin-bottom: 2rem;">
+    OpenClaw证明了市场对AI Agent的渴望。<br>
+    但它也暴露了一个事实：<br>
+    <strong style="color: var(--text-primary);">谁先建立起公众对AI Agent的信任，谁就赢得下一个市场。</strong>
+  </p>
+  <div class="reveal" style="margin-top: 1rem;">
+    <span style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-dim); letter-spacing: 0.1em;">← 这就是为什么我们今天要聊安全</span>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 9 — 市场视角：安全的商业逻辑 ══════════ -->
+<section class="slide slide-enhanced" id="s9">
+  <span class="slide-num">09 / 10</span>
+  <div class="big-num">$</div>
+  <div class="slide-label reveal">市场视角 · The Market Lens</div>
+  <div class="zh-heading reveal">安全问题的<span class="accent">商业翻译</span></div>
+  <div class="en-heading reveal" data-group="zh-en">Translating Security Into Business Language</div>
+  <div class="timeline" style="margin-top: 1.5rem;">
+    <div class="tl-item glow-reveal">
+      <span class="tl-date" style="min-width: 2.5rem;">💡</span>
+      <span class="tl-content">两条路线：开源自部署 vs 平台托管 = <span class="accent">控制权 vs 上手速度</span></span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date" style="min-width: 2.5rem;">🎯</span>
+      <span class="tl-content">买方决策三层：功能层 → 风险层 → <span class="accent">信任层</span></span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date" style="min-width: 2.5rem;">💥</span>
+      <span class="tl-content">十大风险 = 三种品牌灾难：<span class="accent">数据泄露、失控、被操纵</span></span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date" style="min-width: 2.5rem;">⏱️</span>
+      <span class="tl-content">获取信任一千天，失去信任<span class="accent">一秒钟</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SLIDE 10 — 信任即壁垒 ══════════ -->
+<section class="slide slide-enhanced" id="s10">
+  <span class="slide-num">10 / 10</span>
+  <div class="lobster-glyph">🦞</div>
+  <div class="slide-label reveal">信任经济 · The Trust Economy</div>
+  <div class="zh-heading reveal">谁先建立<span class="accent">信任</span>，谁就赢</div>
+  <div class="en-heading reveal" data-group="zh-en">Trust Is the New Moat</div>
+  <div class="timeline" style="margin-top: 1.5rem;">
+    <div class="tl-item glow-reveal">
+      <span class="tl-date" style="min-width: 2.5rem;">🍎</span>
+      <span class="tl-content">隐私正在从合规要求变成<span class="accent">竞争优势</span></span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date" style="min-width: 2.5rem;">📢</span>
+      <span class="tl-content">AI Agent的错误有<span class="accent">规模效应</span>：一千个客户，同样的错话</span>
+    </div>
+    <div class="tl-item glow-reveal">
+      <span class="tl-date" style="min-width: 2.5rem;">🏗️</span>
+      <span class="tl-content">安全 = <span class="accent">信任基础设施</span> = 对品牌最重要的投资</span>
+    </div>
+  </div>
+  <div class="glow-box scale-reveal" style="margin-top: 2rem;">
+    <div class="label" style="font-family: var(--font-mono); font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.5rem;">收尾 · Closing</div>
+    <p style="font-size: clamp(1.2rem, 1.8vw, 1.4rem); color: var(--text-secondary); line-height: 1.7; font-weight: 300;">电商花了十年让消费者愿意在网上输信用卡号<br>AI Agent的信任建立期，<span class="accent" style="font-weight: 700;">现在才刚刚开始</span></p>
+  </div>
+</section>
+
+<script>
+/* ─── Click-to-Reveal Presentation Controller ───
+   Click / Space / → / ↓  = show next element, then next slide
+   ← / ↑                  = go back one slide (reveals all its elements)
+   Dot nav                 = jump to slide (reveals all its elements)
+*/
+
+const slides = Array.from(document.querySelectorAll('.slide'));
+const dots = document.querySelectorAll('.dot-nav a');
+let curSlide = 0;
+
+// Build a map: for each slide, an ordered list of its .reveal elements
+function getReveals(slide) {
+  return Array.from(slide.querySelectorAll('.reveal, .glow-reveal, .scale-reveal, .blur-reveal'));
+}
+
+// Show all reveals in a slide instantly (for going back / jumping)
+function revealAll(slide) {
+  getReveals(slide).forEach(el => el.classList.add('visible'));
+}
+
+// Get next unrevealed element in current slide
+function nextUnrevealed(slide) {
+  return getReveals(slide).find(el => !el.classList.contains('visible'));
+}
+
+// Update dot nav
+function updateDots() {
+  dots.forEach(d => d.classList.remove('active'));
+  const ad = document.querySelector(`.dot-nav a[href="#${slides[curSlide].id}"]`);
+  if (ad) ad.classList.add('active');
+}
+
+// Go to a specific slide
+function goToSlide(idx, revealAllContent) {
+  curSlide = Math.max(0, Math.min(idx, slides.length - 1));
+  slides[curSlide].scrollIntoView({ behavior: 'smooth' });
+  if (revealAllContent) {
+    // small delay to let scroll finish, then reveal
+    setTimeout(() => revealAll(slides[curSlide]), 100);
+  }
+  updateDots();
+}
+
+// Advance: show next reveal, or go to next slide
+function advance() {
+  const unrevealed = nextUnrevealed(slides[curSlide]);
+  if (unrevealed) {
+    unrevealed.classList.add('visible');
+    // If the next unrevealed is a paired en-title/en-heading, reveal it too
+    const next = nextUnrevealed(slides[curSlide]);
+    if (next && next.hasAttribute('data-group')) {
+      next.classList.add('visible');
+    }
+  } else {
+    // all revealed on this slide, go to next
+    if (curSlide < slides.length - 1) {
+      goToSlide(curSlide + 1, false);
+    }
+  }
+}
+
+// Go back: previous slide with all content shown
+function goBack() {
+  if (curSlide > 0) {
+    goToSlide(curSlide - 1, true);
+  }
+}
+
+// ─── Event Listeners ───
+
+// Keyboard
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+    e.preventDefault();
+    advance();
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    goBack();
+  }
+});
+
+// Click anywhere on the slide area (not on nav dots)
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.dot-nav')) return;
+  advance();
+});
+
+// Dot nav click: jump to that slide
+dots.forEach((dot, i) => {
+  dot.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // reveal all slides up to and including target
+    for (let j = 0; j <= i; j++) revealAll(slides[j]);
+    goToSlide(i, true);
+  });
+});
+
+// Sync curSlide on manual scroll
+const syncObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      curSlide = slides.indexOf(e.target);
+      updateDots();
+    }
+  });
+}, { threshold: 0.5 });
+slides.forEach(s => syncObs.observe(s));
+
+// Disable scroll-snap so clicking doesn't fight with snap
+document.documentElement.style.scrollSnapType = 'none';
+
+// Init: reveal nothing, wait for first click. But show slide 1 label at least.
+updateDots();
+
+/* ─── Particle & Light Effect Background ─── */
+(function() {
+  const cvs = document.getElementById('particles');
+  const ctx = cvs.getContext('2d');
+  let w, h, particles, mouse = { x: -999, y: -999 };
+
+  function resize() {
+    w = cvs.width = window.innerWidth;
+    h = cvs.height = window.innerHeight * document.querySelectorAll('.slide').length;
+  }
+
+  function createParticles() {
+    const count = Math.floor((w * h) / 18000);
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.8 + 0.4,
+        dx: (Math.random() - 0.5) * 0.3,
+        dy: (Math.random() - 0.5) * 0.15,
+        opacity: Math.random() * 0.5 + 0.1,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.01 + 0.005,
+        // some particles are accent-colored
+        isAccent: Math.random() < 0.12,
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const scrollY = window.scrollY;
+    const viewTop = scrollY;
+    const viewBottom = scrollY + window.innerHeight;
+
+    for (const p of particles) {
+      // only render particles near viewport for performance
+      if (p.y < viewTop - 50 || p.y > viewBottom + 50) continue;
+
+      p.x += p.dx;
+      p.y += p.dy;
+      p.pulse += p.pulseSpeed;
+
+      // wrap around
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      const pulseFactor = 0.5 + 0.5 * Math.sin(p.pulse);
+      const alpha = p.opacity * (0.6 + 0.4 * pulseFactor);
+
+      // mouse proximity glow
+      const mx = p.x - mouse.x;
+      const my = p.y - (mouse.y + scrollY);
+      const dist = Math.sqrt(mx * mx + my * my);
+      const glow = dist < 150 ? (1 - dist / 150) * 0.6 : 0;
+
+      const finalAlpha = Math.min(alpha + glow, 1);
+      const radius = p.r + glow * 2;
+
+      if (p.isAccent) {
+        ctx.fillStyle = `rgba(255, 77, 58, ${finalAlpha})`;
+      } else {
+        ctx.fillStyle = `rgba(200, 210, 240, ${finalAlpha})`;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // subtle glow for accent particles
+      if (p.isAccent && finalAlpha > 0.3) {
+        ctx.fillStyle = `rgba(255, 77, 58, ${finalAlpha * 0.15})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius * 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // draw faint connection lines between close particles in viewport
+    for (let i = 0; i < particles.length; i++) {
+      const a = particles[i];
+      if (a.y < viewTop - 50 || a.y > viewBottom + 50) continue;
+      for (let j = i + 1; j < particles.length; j++) {
+        const b = particles[j];
+        if (b.y < viewTop - 50 || b.y > viewBottom + 50) continue;
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const d = dx * dx + dy * dy;
+        if (d < 8000) {
+          const lineAlpha = (1 - d / 8000) * 0.08;
+          ctx.strokeStyle = `rgba(200, 210, 240, ${lineAlpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('resize', () => { resize(); createParticles(); });
+  resize();
+  createParticles();
+  draw();
+})();
+</script>
+</body>
+</html>
